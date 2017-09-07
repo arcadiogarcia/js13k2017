@@ -51,6 +51,17 @@
                     localStorage.p = "[]"
                     localStorage.g = "[]"
                     p = []
+                    if (!navigator.serviceWorker) {
+                        x.fillStyle = "black";
+                        x.fillRect(0, 0, a.width, a.height)
+                        x.fillStyle = "white"
+                        x.font = "30px Sans-serif"
+                        x.textAlign = "center"
+                        x.fillText("Service Worker not supported", a.width / 2, 200)
+                        x.font = "25px Sans-serif"
+                        x.fillText("Upgrade your browser to play the game", a.width / 2, 250)
+                        return;
+                    }
                     navigator.serviceWorker.register('w.js').then(function () {
                         updater()
                         onclick = () => {
@@ -232,7 +243,7 @@
                 pinkNoise = (function () {
                     var b0, b1, b2, b3, b4, b5, b6, white;
                     b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
-                    var t=0;
+                    var t = 0;
                     var freq = 100;
                     var node = audioContext.createScriptProcessor(bufferSize, 1, 1);
                     node.onaudioprocess = function (e) {
@@ -240,12 +251,12 @@
                         white = Math.random() * 2 - 1;
                         for (var i = 0; i < bufferSize; i++) {
                             if (Math.random() > 0.9) {
-                                if(Math.random()>0.9){
-                                    freq = Math.ceil(Math.random()*5)*Math.ceil(Math.random()*5);
+                                if (Math.random() > 0.9) {
+                                    freq = Math.ceil(Math.random() * 5) * Math.ceil(Math.random() * 5);
                                 }
                                 white = Math.random() * 2 - 1;
-                            }else{
-                                white = Math.sin((t++)/freq);
+                            } else {
+                                white = Math.sin((t++) / freq);
                             }
                             b0 = 0.99886 * b0 + white * 0.0555179;
                             b1 = 0.99332 * b1 + white * 0.0750759;
@@ -264,8 +275,7 @@
                 pinkNoise.connect(audioContext.destination);
             }
 
-            function stopSound(){
+            function stopSound() {
                 pinkNoise.disconnect();
             }
-
         </script>
